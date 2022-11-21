@@ -1,7 +1,8 @@
 import sqlite3
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'f2df449b3f34a6a424e86ee966760b44'
 
 @app.route("/")
 def index():
@@ -26,6 +27,10 @@ def get_post(post_id):
 def post(post_id):
     post = get_post(post_id)
     return render_template('post.html', post=post)
+
+@app.route('/create', methods=('GET', 'POST'))
+def create():
+    return render_template('create.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
